@@ -337,6 +337,14 @@ module Kafka
       end.map(&:topic_name)
     end
 
+    def list_groups
+      refresh_metadata_if_necessary!
+      cluster_info.brokers.map do |broker|
+        groups = connect_to_broker(broker.node_id).list_groups.groups
+        groups.map(&:group_id)
+      end.flatten.uniq
+    end
+
     def disconnect
       @broker_pool.close
     end

@@ -625,6 +625,10 @@ module Kafka
       @cluster.disconnect
     end
 
+    def groups
+      @cluster.list_groups
+    end
+
     private
 
     def initialize_cluster
